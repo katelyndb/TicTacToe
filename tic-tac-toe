@@ -1,0 +1,92 @@
+'''
+Solo Checkpoint 02
+Author: Katie Blunck
+'''
+
+
+
+
+
+def main():
+    keep_playing = True 
+    current_player = "X"
+
+    blank_board = create_board()
+    current_board = blank_board 
+    display_board(current_board)
+    while keep_playing:
+
+        current_board = make_move(current_player, current_board)
+        display_board(current_board)
+        if is_draw(current_board) or is_winner(current_board):
+            keep_playing = False
+            if is_winner(current_board):
+                print(f"{current_player} has won!")
+            else:
+                print("That's a draw!")
+            print ("Thanks for playing!")
+        current_player = next_player(current_player)
+    
+
+
+def create_board():
+    blank_board = [ 1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 9]
+    
+
+    return blank_board
+
+def display_board(board):
+    print ("-------------")
+    print (f"| {board[0]} | {board[1]} | {board[2]} |")
+    print ("-------------")
+    print (f"| {board[3]} | {board[4]} | {board[5]} |")
+    print ("-------------")
+    print (f"| {board[6]} | {board[7]} | {board[8]} |")
+    print ("-------------")
+    
+
+def is_draw(board):
+    for position in range(9):
+        if board[position -1] != "X" and board[position -1] != "O":
+            return False
+    return True
+
+def is_winner(board):
+    if (board[0] == board[1] == board[2] or
+        board[3] == board[4] == board[5] or
+        board[6] == board[7] == board[8] or
+        board[0] == board[3] == board[6] or
+        board[1] == board[4] == board[7] or
+        board[2] == board[5] == board[8] or
+        board[0] == board[4] == board[8] or
+        board[2] == board[4] == board[6]):
+        return True
+    else:
+        return False
+
+
+def make_move(player, board):
+    move_valid = False
+    while(move_valid != True):
+        move = int(input(f"{player}'s turn to choose a square (1-9): "))  
+        if board[(move) -1] != "X" and board[(move) -1] != "O" and board[(move) -1] < 10 and  board[(move) -1] > 0 :
+            board[(move) -1] = player
+            move_valid = True
+        else:
+            print("-Error- Please enter a number with an open position")
+    return board
+    
+     
+
+def next_player(current):
+    if current == "X":
+        return "O"
+    else:
+        return "X"
+
+
+# run main if this has been called from the command line
+if __name__ == "__main__":
+    main()
